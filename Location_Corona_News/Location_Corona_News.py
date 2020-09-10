@@ -13,7 +13,7 @@ press_text=[]
 result={}
 
 #엑셀로 저장하기 위한 변수
-RESULT_PATH ='C:/News Execl/'  #결과 저장할 경로
+RESULT_PATH ='C:/'  #결과 저장할 경로
 now = datetime.now() #파일이름 현 시간으로 저장하기
 
 def main():
