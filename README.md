@@ -7,6 +7,7 @@ Python으로 **공부**한 스크립트 및 프로젝트 Repository
   * Location_Corona_News
   * Typing_Game_Script
   * Notepad_Script
+  * Search_LOL_Summer
   
   
   [**개인 블로그 주소**](https://it-neicebee.tistory.com/)
