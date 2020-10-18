@@ -58,7 +58,6 @@ def sign_in_naver(encnm, encpw):
     """
     encData = '{"a":"%s-4","b":"1.3.4","d":[{"i":"id","b":{"a":["0,%s"]},"d":"%s","e":false,"f":false},{"i":"%s","e":true,"f":false}],"h":"1f","i":{"a":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36"}}' % (bvsd_uuid, id, id, pw)
     bvsd = '{"uuid":"%s","encData":"%s"}' % (bvsd_uuid, lzstring.LZString.compressToEncodedURIComponent(encData))
-    #####################################
 
     post_data = {
         'encnm': encnm,
@@ -74,10 +73,10 @@ def sign_in_naver(encnm, encpw):
 
     login_url = res.text[res.text.find("replace(\"")+9:res.text.find("\");")].strip()
 
-    s.close()
+    s.get(login_url)
 
-    # 반환해주는 login_url을 접속하게 되면 naver에 로그인이 된다.
-    return login_url
+    # 로그인이 되어 유지되는 세션을 리턴해준다.
+    return s
 
 
 if __name__ == '__main__':
@@ -85,6 +84,6 @@ if __name__ == '__main__':
     pw = str(input("Naver PW: "))
 
     keyname, encpw = n_session(id, pw)
-    login_url = sign_in_naver(keyname, encpw)
 
-    print("네이버 로그인 url : " + login_url)
+    with sign_in_naver(keyname, encpw) as s:
+        print(s.get("https://www.naver.com"))
