@@ -12,7 +12,7 @@ Python으로 **공부**한 스크립트 및 프로젝트 Repository
   * Naver_Signin_For_Requests
   * Lotto_Generator
   * Upbit_Price_Up_and_Down
-  * Zoom_Attendtion
+  * Zoom_Attendance
   
   
   [**개인 블로그 주소**](https://it-neicebee.tistory.com/)
