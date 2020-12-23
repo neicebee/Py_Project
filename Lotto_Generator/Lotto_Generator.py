@@ -1,21 +1,27 @@
-import random, sys, requests, fake_useragent
+import random, requests
 from bs4 import BeautifulSoup
 
 def get_lottonum():
+    # 랜덤 로또 번호를 담을 리스트
     lotto_num = []
     lotto_num.append(random.randint(1, 45))
 
     while(True):
+        # 로또 번호가 중복되는지 확인하는 리스트
         boolean = []
+        # lotto_num에 담겨있는 번호와 비교할 변수
         a = random.randint(1, 45)
 
-        for i in range(0, len(lotto_num)):
+        # lotto_num에 담겨있는 번호들을 a와 비교
+        for i in range(len(lotto_num)):
             boolean.append(get_True_False(lotto_num[i], a))
 
+        # lotto_num 리스트의 길이가 6이 되면 정렬 후 break
         if len(lotto_num) == 6:
             lotto_num.sort()
             break
 
+        # 비교한 결과를 담은 boolean 리스트에 False가 있으면 while 다시 실행
         if False in boolean:
             continue
         else:
@@ -26,18 +32,18 @@ def get_lottonum():
     return lotto_num, bounsnum
 
 def get_True_False(lotto_num, a):
-
     if lotto_num == a:
         return False
     else:
         return True
 
 def get_bonusnum(lotto_num):
+    # get_lottonum 메서드와 같은 개념
     while(True):
         check = True
         b = random.randint(1, 45)
 
-        for i in range(0, len(lotto_num)):
+        for i in range(len(lotto_num)):
             if lotto_num[i] == b:
                 check = False
 
@@ -49,17 +55,16 @@ def get_bonusnum(lotto_num):
 
 def get_last_lotto_num(params=None):
     url = "https://dhlottery.co.kr/gameResult.do?method=byWin"
-    ua = fake_useragent.UserAgent()
+    ua = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36'
 
-    hdr = {'User-Agent':str(ua.random)}
+    hdr = {'User-Agent':ua}
 
     req = requests.get(url, params=params, headers=hdr)
     print('[get_html] url:', req.url)
     print('[get_html] status_code:', req.status_code)
 
     if req.status_code != 200:
-        print("Error!")
-        sys.exit(1)
+        raise Exception('Connection Error!')
 
     soup = BeautifulSoup(req.text, 'html.parser')
 
@@ -96,6 +101,6 @@ if __name__ == '__main__':
             print(last_round_bonus_num)
         elif a == '0':
             print("종료")
-            sys.exit(0)
+            break
         else:
             print("다시 입력하십시오...")
